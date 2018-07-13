@@ -78,7 +78,7 @@ class MIB2TSD(object):
     # Convert the image to a 39x39 png image (we have not tested whether any other sizes/formats are supported)
     icon_str='bitmaps/%s,0,0,39,39,-19,-39' % (dst_icon)
     img=Image.open(src_icon)
-    img.resize((39,39), Image.ANTIALIAS)  # Alternatively use img.thumbnail() to keep aspect ratio
+    img=img.resize((39,39), Image.ANTIALIAS)  # Alternatively use img.thumbnail() to keep aspect ratio
     img.save(os.path.join(self.dest,'personalpoi','ppoidb','1','default','icon',dst_icon))
 
     print('MIB2TSD New Category: %d "%s" %d "%s" => "%s"' % (catid,categoryname,categorywarn,src_icon,dst_icon))
