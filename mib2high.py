@@ -151,6 +151,7 @@ class MIB2HIGH(object):
 
     # Build the poiname table
     poiname=pandas.DataFrame()
+    poiname['rowid']=range(startpoiid,startpoiid+len(df)) # Explicitly specify the rowid..
     poiname['name']=df['name']
     poiname.to_sql(name='poiname',con=self.conn,if_exists='append',index=False)
 
