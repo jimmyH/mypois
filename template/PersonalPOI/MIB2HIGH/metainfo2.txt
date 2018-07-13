@@ -1,0 +1,47 @@
+[common]
+skipSaveTrainName = "true"
+vendor = "ESO"
+skipCheckSignatureAndVariant = "true"
+region = "Europe"
+region2 = "RoW"
+region3 = "USA"
+variant = "FM?-H-*-*-*"
+release = "2012/2013"
+UserSWDL = "true"
+skipMetaCRC = "true"
+skipFileCopyCrc = "true"
+MetafileChecksum = "8e43a1b1ae2073a7af5450cc13b2e61046b6e75b"
+
+[PersonalPOI]
+VendorInfo = "ESO"
+DeviceDescription = "Personal POI Packages"
+ConfigComponent = "PersonalPOI"
+PacketName = "Package"
+ConfigCheckPath = "PersonalPOI/Package/0/default"
+ConfigFinalizePath = "/net/mmx/mnt/navdb/PersonalPOI/Package"
+IncludeModules = ",Package,"
+
+[PersonalPOI\Package\0\default\Dir]
+CheckSumSize = "524288"
+CheckSum = "81ec2d0e33b4ec923458ab795a063d13695c548d"
+FileSize = "1333778"
+CheckType = "CheckReadData"
+DeleteDestinationDirBeforeCopy = "true"
+Version = "1"
+UpdateOnlyExisting = "false"
+IsDestinationInFFS = "false"
+Source = ""
+Destination = "/net/mmx/mnt/navdb/PersonalPOI/Package"
+DisplayName = "Personal POIs"
+
+[PersonalPOI\InfoFile\0\default\File]
+CheckSumSize = "524288"
+CheckSum = "837bb24c265aa7dc59197fb8a87d5bc19af8dc7a"
+FileSize = "640"
+Version = "3"
+Source = "Update.txt"
+Destination = "/net/mmx/mnt/navdb/PersonalPOI/Update.txt"
+DisplayName = "Database Information"
+DeleteDestinationDirBeforeCopy = "true"
+UpdateOnlyExisting = "false"
+

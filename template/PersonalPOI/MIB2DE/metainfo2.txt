@@ -1,0 +1,64 @@
+#################################################################################
+#  	
+# This is the description file for the Software Update of Volkswagen components
+#
+#################################################################################
+
+[common]
+skipSaveTrainName = "true"
+vendor = "Delphi"
+skipCheckSignatureAndVariant = "true"
+region = "Europe"
+region2 = "RoW"
+region3 = "USA"
+variant = "17245"
+variant2 = "17246"
+variant3 = "17250"
+variant4 = "17251"
+variant5 = "17247"
+variant6 = "17252"
+variant7 = "17254"
+variant8 = "17255"
+variant9 = "17268"
+variant10 = "17269"
+variant11 = "17270"
+variant12 = "17271"
+release = "2012/2013"
+UserSWDL = "true"
+skipMetaCRC = "true"
+MetafileChecksum = "bd80c82339199fa74715455c4f484fa9cb937e33"
+skipFileCopyCrc = "true"
+
+[PersonalPOI]
+VendorInfo = "Delphi"
+DeviceDescription = "Personal POI Packages"
+
+ConfigComponent = "PersonalPOI"
+PacketName = "Package"
+ConfigCheckPath = "../MIB2HIGH/PersonalPOI/Package/0/default"
+ConfigFinalizePath = "/media/swdl/packages/PersonalPOI/Package"
+IncludeModules = ",Package,"
+
+[PersonalPOI\Package\0\default\Dir]
+CheckSumSize = "524288"
+CheckSum = "8494fb3848d42d32fa9168020485c4446ef4f9ad"
+FileSize = "1325483"
+CheckType = "CheckReadData"
+DeleteDestinationDirBeforeCopy = "true"
+Version = "1"
+UpdateOnlyExisting = "false"
+IsDestinationInFFS = "false"
+Source = "../../../../../MIB2HIGH/PersonalPOI/Package/0/default/"
+Destination = "/media/swdl/packages/PersonalPOI/Package"
+DisplayName = "Personal POIs"
+
+[PersonalPOI\InfoFile\0\default\File]
+CheckSumSize = "524288"
+CheckSum = "837bb24c265aa7dc59197fb8a87d5bc19af8dc7a"
+FileSize = "640"
+Version = "3"
+Source = "../../../../../MIB2HIGH/PersonalPOI/InfoFile/0/default/Update.txt"
+Destination = "/media/swdl/packages/PersonalPOI/"
+DisplayName = "Database Information"
+DeleteDestinationDirBeforeCopy = "false"
+UpdateOnlyExisting = "false"
