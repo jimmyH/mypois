@@ -7,6 +7,7 @@ import csv
 import utils
 import shutil
 from morton import encode_morton_code, decode_morton_code
+from PIL import Image
 
 '''
 Amundsen:
@@ -73,7 +74,12 @@ class MIB2TSD(object):
 
     src_icon=icon
     (_,icon_extension) = os.path.splitext(src_icon)
-    dst_icon='%03d_image%s' % (catid - 2001,icon_extension)
+    dst_icon='%03d_image.png' % (catid - 2001)
+    # Convert the image to a 39x39 png image (we have not tested whether any other sizes/formats are supported)
+    icon_str='bitmaps/%s,0,0,39,39,-19,-39' % (dst_icon)
+    img=Image.open(src_icon)
+    img.resize((39,39), Image.ANTIALIAS)  # Alternatively use img.thumbnail() to keep aspect ratio
+    img.save(os.path.join(self.dest,'personalpoi','ppoidb','1','default','icon',dst_icon))
 
     print('MIB2TSD New Category: %d "%s" %d "%s" => "%s"' % (catid,categoryname,categorywarn,src_icon,dst_icon))
 
@@ -82,7 +88,6 @@ class MIB2TSD(object):
     cursor.execute('insert into pPoiIconTable(catId,iconSet,iconName) values(?,?,?)',(catid,2,icon))
     self.conn.commit()
 
-    shutil.copyfile(src_icon,os.path.join(self.dest,'personalpoi','ppoidb','1','default','icon',dst_icon))
 
     # Get the last rowid used in the table
     cursor.execute('select max(rowid) from "pPoiAddressTable"')

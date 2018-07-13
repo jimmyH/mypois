@@ -11,11 +11,14 @@ These scripts can be used to:
 
 This should work on all versions of python 2.7 onwards, and run on Windows, Mac and Linux.
 
+Icons are converted to 39x39 png images (using the PIL library).
+
 The following issues may be encountered:
   - Only csv data is currently supported
   - Non utf-8 characters may not work (untested)
-  - Only tested with 39x39 png icons
-
+  - The PIL library has limited support for different image types (only tested bmp,png)
+  - Images may lose their aspect ration when being converted to 39x39
+  - No idea on whether the SatNav supports larger images
 
 ## Fixing the checksums using poifix
 
@@ -48,7 +51,8 @@ OutputDirectory=mydir                 # The name of the output directory (must n
 Name=GB Traffic Light Cameras         # The category name
 Warning=True                          # Use 'True' to get a sound notification when near
 Source=../GBFeuRougeGB.csv            # The input file containing the POIs **Currently only csv files are supported**
-Icon=../traffic.png                   # The icon to use                    **Currently only 39x39 icons are supported**
+                                      # NB Use / for Unix paths, and \ for Windows Paths
+Icon=../traffic.png                   # The icon to use                    **Will be resized and converted to 39x39 png**
 Disabled=False                        # Optional element, set to True if you want this section to be skipped
 
 [variable]                            # Another section
