@@ -29,7 +29,7 @@ def create_mypois(config_file):
   shutil.copytree(os.path.join(os.path.dirname(__file__),'template'),dest)
 
   #
-  mib2high = m2high.MIB2HIGH(os.path.join(dest,'PersonalPOI','MIB2HIGH'))
+  mib2high = m2high.MIB2HIGH(os.path.join(dest,'PersonalPOI','MIB2','MIB2HIGH'))
   mib2high.open()
 
   mib2tsd = m2tsd.MIB2TSD(os.path.join(dest,'PersonalPOI','MIB2TSD'))

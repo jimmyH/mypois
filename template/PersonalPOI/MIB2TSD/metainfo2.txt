@@ -1,4 +1,11 @@
+#################################################################################
+#   
+# This is the description file for the Software Update of Volkswagen components
+#
+#################################################################################
+
 [common]
+MetafileChecksum = "9f04fbe160968e8f1ddcf98456ba9ee25a032a31"
 Release = "Personal POI"
 MUVersion = "----"
 Vendor = "TechniSat"
@@ -19,12 +26,8 @@ Variant14 = "37208"
 Variant15 = "47205"
 Variant16 = "17222"
 Variant17 = "47210"
-Variant18 = "17224"
-Variant19 = "37214"
-Variant20 = "17210"
-Variant21 = "17220"
-Variant22 = "47213"
-Variant23 = "47214"
+Variant18 = "17210"
+Variant19 = "17220"
 SkipSaveTrainName = "true"
 UserSWDL = "true"
 Engineering = "false"
@@ -32,7 +35,6 @@ Region = "Europe"
 Region2 = "RoW"
 Region3 = "USA"
 DelMmeBackups = "true"
-MetafileChecksum = "47d85993695780964a4e3a6c80b709e12d7015a4"
 
 [personalpoi]
 VendorInfo = "TechniSat"
@@ -43,17 +45,16 @@ MainUnitDevice = "true"
 
 [personalpoi\ppoidb\1\default\Dir]
 CheckSumSize = "524288"
-CheckSum = "b267a70ca2b86b9a683e2ccf8e2e91c92984ca3c"
-FileSize = "2112778"
+CheckSum = "10af09b11508ed4a86fd9c2d427ee35f905c8830"
+FileSize = "23578"
 Source = ""
 Destination = "/tsd/var/nav/personalpoi/"
 Version = "1"
 
 [personalpoi\InfoFile\1\default\File]
 CheckSumSize = "524288"
-CheckSum = "837bb24c265aa7dc59197fb8a87d5bc19af8dc7a"
+CheckSum = "215025119416ee05724e5f1bceef3a642d0e695a"
 FileSize = "640"
 Source = "Update.txt"
 Destination = "/tsd/etc/PoiUpdate.txt"
 Version = "1"
-
