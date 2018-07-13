@@ -9,8 +9,6 @@ These scripts can be used to:
   - Correct the checksums of an existing POI database
   - Build the POI database without using the Skoda Destinations website
 
-This should work on all versions of python 2.7 onwards, and run on Windows, Mac and Linux.
-
 Icons are converted to 39x39 png images (using the PIL library).
 
 The following issues may be encountered:
@@ -19,6 +17,19 @@ The following issues may be encountered:
   - The PIL library has limited support for different image types (only tested bmp,png)
   - Images may lose their aspect ration when being converted to 39x39
   - No idea on whether the SatNav supports larger images
+
+## Installation issues
+
+This should work on all versions of python 2.7 onwards, and run on Windows, Mac and Linux. However:
+
+The scripts require the following python modules to be installed:
+  - pandas
+  - pillow
+  - configparser
+
+It also requires a version of sqlite with rtree support.
+
+If you install python from python.org on Windows, the included version of sqlite does NOT include rtree support. You also need to replace the installed sqlite3.dll file with one from [sqlite.org][https://www.sqlite.org/2018/sqlite-dll-win64-x64-3240000.zip]
 
 ## Fixing the checksums using poifix
 
