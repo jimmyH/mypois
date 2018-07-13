@@ -119,12 +119,8 @@ class MIB2HIGH(object):
     # Update bitmaps.xml
     cElementTree.SubElement(self.poibitmaps,'resource', { 'id':str(self.next_category+1), 'name':icon_str })
 
-    self.next_category += 1
-
     #
-    poitype=3
     ccode=0
-
 
     # Get the last rowid used in the table
     cursor.execute('select max(rowid) from "poicoord"');
@@ -157,7 +153,9 @@ class MIB2HIGH(object):
     # Build the poidata table
     poidata=pandas.DataFrame()
     poidata['poiid'] = range(startpoiid,startpoiid+len(poicoord))
-    poidata['type'] = poitype
+    poidata['type'] = self.next_category
     poidata['ccode'] = ccode
     poidata.to_sql(name='poidata',con=self.conn,if_exists='append',index=False)
+
+    self.next_category += 1
 

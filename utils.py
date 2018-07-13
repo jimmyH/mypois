@@ -50,6 +50,8 @@ version.cs_CZ=2018-07-07
     for i in locales:
       f.write('version.%s=%s\n' % (i,version))
 
+def dbgelem(x,prefix=None):
+  print("%s %s %s %s" % (prefix if prefix is not None else "",x.tag,x.attrib,x.text.rstrip() if x.text is not None else ""))
 
 def indent(elem, level=0):
     i = "\n" + level*"  "
