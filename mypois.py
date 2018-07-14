@@ -14,11 +14,14 @@ def create_mypois(config_file):
   config.readfp(open(config_file))
 
   dest = None
+  skipmib2tsd=False
+  skipmib2high=False
 
   if 'General' in config:
     if 'OutputDirectory' in config['General']:
       dest = config['General']['OutputDirectory']
-
+    skipmib2tsd=config.getboolean('General','SkipMIB2TSD',fallback=False)
+    skipmib2high=config.getboolean('General','SkipMIB2HIGH',fallback=False)
 
   if dest is None:
     print("Failed to find OutputDirectory in configuration file")
@@ -29,11 +32,13 @@ def create_mypois(config_file):
   shutil.copytree(os.path.join(os.path.dirname(__file__),'template'),dest)
 
   #
-  mib2high = m2high.MIB2HIGH(os.path.join(dest,'PersonalPOI','MIB2','MIB2HIGH'))
-  mib2high.open()
+  if not skipmib2high:
+    mib2high = m2high.MIB2HIGH(os.path.join(dest,'PersonalPOI','MIB2','MIB2HIGH'))
+    mib2high.open()
 
-  mib2tsd = m2tsd.MIB2TSD(os.path.join(dest,'PersonalPOI','MIB2TSD'))
-  mib2tsd.open()
+  if not skipmib2tsd:
+    mib2tsd = m2tsd.MIB2TSD(os.path.join(dest,'PersonalPOI','MIB2TSD'))
+    mib2tsd.open()
 
   #
   for section in config.sections():
@@ -51,16 +56,18 @@ def create_mypois(config_file):
       extension = extension.lower()
 
       if extension == '.csv':
-        mib2high.read_csv(config[section])
-        mib2tsd.read_csv(config[section])
+        if not skipmib2high: mib2high.read_csv(config[section])
+        if not skipmib2tsd: mib2tsd.read_csv(config[section])
       else:
         print("Unknown extension %s" % extension)
 
-  mib2high.close()
-  mib2tsd.close()  
+  if not skipmib2high:
+    mib2high.close()
+    poifix.fix(mib2high.dest)
 
-  poifix.fix(mib2high.dest)
-  poifix.fix(mib2tsd.dest)
+  if not skipmib2tsd:
+    mib2tsd.close()  
+    poifix.fix(mib2tsd.dest)
 
 def main(argv=None):
   cfg = os.path.join(os.path.dirname(__file__),'config.ini')

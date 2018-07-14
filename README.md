@@ -2,8 +2,9 @@
 # Simple scripts for POIs on the Skoda Columbus2 and Amundsen SatNavs
 
 The skoda destinations website can be used to build a POI database for the Skoda
-Columbus and Amundsen SatNavs. However, it currently does not compute the checksums
-correctly so cannot be loaded onto the SatNav. It is also quite unreliable.
+Columbus (MIB2HIGH) and Amundsen (MIB2TSD) SatNavs. However, it currently does
+not compute the checksums correctly so cannot be loaded onto the SatNav. It is
+also quite unreliable.
 
 These scripts can be used to:
   - Correct the checksums of an existing POI database
@@ -27,7 +28,7 @@ The scripts require the following python modules to be installed:
   - pillow
   - configparser
 
-It also requires a version of sqlite with rtree support.
+It also requires a version of sqlite with rtree support (only for Columbus).
 
 If you install python from python.org on Windows, the included version of sqlite does NOT include rtree support. You also need to replace the installed sqlite3.dll file with one from [sqlite.org][https://www.sqlite.org/2018/sqlite-dll-win64-x64-3240000.zip]
 
@@ -57,6 +58,8 @@ An (annotated) example configuration file
 ```
 [General]
 OutputDirectory=mydir                 # The name of the output directory (must not exist)
+SkipMIB2HIGH=False                    # Set to True to skip building the MIB2HIGH database
+SkipMIB2TSD=False                     # Set to True to skip building the MIB2TSD database
 
 [traffic]                             # One section per category
 Name=GB Traffic Light Cameras         # The category name
