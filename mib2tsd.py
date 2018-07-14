@@ -79,13 +79,14 @@ class MIB2TSD(object):
     icon_str='bitmaps/%s,0,0,39,39,-19,-39' % (dst_icon)
     img=Image.open(src_icon)
     img=img.resize((39,39), Image.ANTIALIAS)  # Alternatively use img.thumbnail() to keep aspect ratio
+    img=img.convert('RGBA') # Amundsen doesn't seem to like Colormap pngs
     img.save(os.path.join(self.dest,'personalpoi','ppoidb','1','default','icon',dst_icon))
 
     print('MIB2TSD New Category: %d "%s" %d "%s" => "%s"' % (catid,categoryname,categorywarn,src_icon,dst_icon))
 
     cursor.execute('insert into pPoiCategoryTable(catId,categoryDefaultName,warning) values(?,?,?)',(catid,categoryname,categorywarn))
-    cursor.execute('insert into pPoiIconTable(catId,iconSet,iconName) values(?,?,?)',(catid,1,icon)) # TODO What is iconSet used for?
-    cursor.execute('insert into pPoiIconTable(catId,iconSet,iconName) values(?,?,?)',(catid,2,icon))
+    cursor.execute('insert into pPoiIconTable(catId,iconSet,iconName) values(?,?,?)',(catid,1,dst_icon)) # TODO What is iconSet used for?
+    cursor.execute('insert into pPoiIconTable(catId,iconSet,iconName) values(?,?,?)',(catid,2,dst_icon))
     self.conn.commit()
 
 
@@ -93,7 +94,7 @@ class MIB2TSD(object):
     cursor.execute('select max(rowid) from "pPoiAddressTable"')
     (lastrowid,)=cursor.fetchone()
     if lastrowid is None:
-      startpoiid=0
+      startpoiid=1
     else:
       startpoiid=lastrowid+1
 
