@@ -49,7 +49,7 @@ def unwiden(v):
   ''' unwiden (remove the zero from the left of each bit) a 64bit value to 32 bits
       http://fgiesen.wordpress.com/2009/12/13/decoding-morton-codes/
   '''
-  v = long(v)
+  v = int(v)
   v &= 0x5555555555555555
   v ^= v>>1
   v &= 0x3333333333333333
@@ -64,8 +64,8 @@ def unwiden(v):
   return v
 
 def encode_morton_code(lat,lng):
-  latw = long(lat*0xffffffff/360.0) 
-  lngw = long(lng*0xffffffff/360.0)
+  latw = int(lat*0xffffffff/360.0) 
+  lngw = int(lng*0xffffffff/360.0)
   latw = widen(to_twos_complement(latw))
   lngw = widen(to_twos_complement(lngw))
   return lngw | ( latw << 1 )
