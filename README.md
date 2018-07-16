@@ -76,3 +76,8 @@ Source=../variable_speed.csv
 Icon=../variable.png
 ```
 
+## Using pyinstaller to distribute as an executable on Windows
+
+```
+c:\Python27\Scripts\pyinstaller.exe --onefile  mypois.spec
+```

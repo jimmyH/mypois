@@ -7,6 +7,19 @@ import mib2tsd as m2tsd
 import configparser
 import poifix
 
+VERSION=0.01
+
+def resource_path(rpath):
+  ''' Get the path to a resource relative to this script.
+      If using pyinstaller then sys._MEIPASS will be set,
+      otherwise just use __file__
+  '''
+  try:
+    bpath = sys._MEIPASS
+  except AttributeError:
+    bpath = os.path.dirname(__file__)
+  return os.path.join(bpath,rpath)
+
 def create_mypois(config_file):
   config = configparser.ConfigParser()
   config.optionxform=str # make case sensitive
@@ -29,7 +42,7 @@ def create_mypois(config_file):
   else:
     print("Using OutputDirectory: %s" % dest)
 
-  shutil.copytree(os.path.join(os.path.dirname(__file__),'template'),dest)
+  shutil.copytree(resource_path('template'),dest)
 
   #
   if not skipmib2high:
@@ -70,7 +83,8 @@ def create_mypois(config_file):
     poifix.fix(mib2tsd.dest)
 
 def main(argv=None):
-  cfg = os.path.join(os.path.dirname(__file__),'config.ini')
+  print("Version %s" % VERSION)
+  cfg = resource_path('config.ini')
   if len(sys.argv)>=2:
     cfg = sys.argv[1]
     print("Using config file: %s" % cfg)
