@@ -1,14 +1,28 @@
 
-# Simple scripts for POIs on the Skoda Columbus2 and Amundsen SatNavs
+# Simple scripts for POIs on the Skoda MIB2 (Columbus2 and Amundsen) SatNavs
 
-The skoda destinations website can be used to build a POI database for the Skoda
-Columbus (MIB2HIGH) and Amundsen (MIB2TSD) SatNavs. However, it currently does
-not compute the checksums correctly so cannot be loaded onto the SatNav. It is
-also quite unreliable.
+## Overview
 
-These scripts can be used to:
-  - Correct the checksums of an existing POI database
-  - Build the POI database without using the Skoda Destinations website
+  For MIB1 (from what I can gather from googling):
+
+  - Does not support an audible warning when approaching a POI
+  - Uses a single sqlite (db3) file for updating POIs
+  - VW no longer provides an online mechanism for updating the POIs
+  - POInspector is the only utility currently available to generate a new database. There are no free utilities.
+  - The format is significantly different to MIB2. This is not currently supported.
+
+  For MIB2:
+
+  - Skoda Columbus (MIB2HIGH) and Amundsen (MIB2TSD) SatNavs
+  - The Skoda Destinations website builds the POI database with incorrect checksums, so it cannot be loaded onto the SatNav. You can use poifix.py to fix this problem.
+  - POInspector and POIbase utilities can also be used to build the POI database
+  - This script creates the POI database itself:
+    - For windows you can find a prebuilt executable in the releases page
+    - To use, simply create a configuration file in the same directory as your POIs, and then run mypois.exe config.ini, then copy the generated files to your sd card.
+
+  Audi, Volkswagen and Seat SatNavs are not currently supported.
+
+## Notes
 
 Icons are converted to 39x39 png images (using the PIL library).
 
@@ -17,20 +31,19 @@ The following issues may be encountered:
   - Non utf-8 characters may not work (untested)
   - The PIL library has limited support for different image types (only tested bmp,png)
   - Images may lose their aspect ration when being converted to 39x39
-  - No idea on whether the SatNav supports larger images
 
-## Installation issues
+## Installation
 
-This should work on all versions of python 2.7 onwards, and run on Windows, Mac and Linux. However:
+On Windows you can find a prebuilt executable in the releases page.
 
-The scripts require the following python modules to be installed:
+Alternatively, you need a version of python 2.7 or later, and require the following python modules to be installed:
   - pandas
   - pillow
   - configparser
 
 It also requires a version of sqlite with rtree support (only for Columbus).
 
-If you install python from python.org on Windows, the included version of sqlite does NOT include rtree support. You also need to replace the installed sqlite3.dll file with one from [sqlite.org][https://www.sqlite.org/2018/sqlite-dll-win64-x64-3240000.zip]
+If you install python from python.org on Windows, the included version of sqlite does NOT include rtree support. You will need to replace the installed sqlite3.dll file with one from [sqlite.org](https://www.sqlite.org)
 
 ## Fixing the checksums using poifix
 
@@ -42,19 +55,13 @@ python /path/to/poifix.py /path/to/MIB2TSD
 python /path/to/poifix.py /path/to/MIB2HIGH
 ```
 
+Note: If you wish to use poifix, you *must* have installed python and the configparser dependency.
+
 ## Building a new POI database
 
-The mypois.py script needs a configuration file. By default it will use config.ini in the same directory as the script.
+You need a configuration file to tell the script which POI categories to add and which icons to use
 
-```
-# Using config.ini
-python /path/to/mypois.py
-
-# Using your own configuration script
-python /path/to/mypois.py /path/to/config.ini
-```
-
-An (annotated) example configuration file
+An (annotated) example configuration file:
 ```
 [General]
 OutputDirectory=mydir                 # The name of the output directory (must not exist)
@@ -74,6 +81,46 @@ Name=GB Variable Speed Cameras
 Warning=True
 Source=../variable_speed.csv
 Icon=../variable.png
+```
+
+Another example:
+```
+[General]
+OutputDirectory=pois
+
+[avg]
+Name=UK Average Speedcams
+Warning=True
+Source=UK Average Speedcams.csv
+Icon=UK Average Speedcam.bmp
+
+[fixed]
+Name=UK Fixed Speedcams
+Warning=True
+Source=UK Fixed Speedcams.csv
+Icon=UK Fixed Speedcam.bmp
+
+[redlight]
+Name=UK Redlight Speedcams
+Warning=True
+Source=UK Redlight Speedcams.csv
+Icon=UK Redlight Speedcam.bmp
+
+[variable]
+Name=UK Variable Speedcams
+Warning=True
+Source=UK Variable Speedcams.csv
+Icon=UK Variable Speedcam.bmp
+```
+
+To run using the mypois.exe executable on windows:
+```
+c:\path\to\mypois.exe c:\path\to\config.ini
+```
+
+To run using python:
+```
+python /path/to/mypois.py /path/to/config.ini
 ```
 
 ## Using pyinstaller to distribute as an executable on Windows
