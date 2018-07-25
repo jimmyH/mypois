@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import sys
 import sqlite3
 import pandas
 import csv
@@ -92,7 +93,7 @@ if __name__ == "__main__":
   import sys
   if len(sys.argv)!=2:
     print("usage: %s <path to MIB2HIGH directory>" % sys.argv[0])
-    exit(1)
+    sys.exit(1)
 
   m = MIB2HIGH2CSV(sys.argv[1])
   m.open()

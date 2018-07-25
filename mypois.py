@@ -38,7 +38,7 @@ def create_mypois(config_file):
 
   if dest is None:
     print("Failed to find OutputDirectory in configuration file")
-    exit(1)
+    sys.exit(1)
   else:
     print("Using OutputDirectory: %s" % dest)
 

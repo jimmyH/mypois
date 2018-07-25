@@ -140,7 +140,7 @@ def fix(base):
 if __name__ == "__main__":
   if len(sys.argv)!=2:
     print("usage: %s <path to MIB2HIGH or MIB2TSD directory>" % sys.argv[0])
-    exit(1)
+    sys.exit(1)
 
   base = sys.argv[1]
 
