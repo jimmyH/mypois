@@ -70,7 +70,16 @@ def indent(elem, level=0):
 
 import pandas
 def read_geo_csv(source):
-  ''' Try and handle CSVs with or without headers '''
+  ''' Try and handle CSVs with or without headers
+
+      * Expects ',' separators
+      * Ignores whitespace after separators
+      * Expects '"' for quoting
+      * If no header is present it assumes 3+ columns with longitude, latitude and name
+      * If a header is present it attempts to find the longitude, latitude and name columns
+        * Ignores a leading ';' in the column name
+
+  '''
 
   # Read the 1st row to establish if there is a header or not
   df = pandas.read_csv(source,header=None,nrows=1)
@@ -82,10 +91,10 @@ def read_geo_csv(source):
     # does not have a header, we assume the fields are long,lat,name
     if len(df.columns)!=3:
       raise Exception("Expected 3 columns in headerless csv file %s, got %d" % (source,len(df.columns)))
-    return pandas.read_csv(source,header=None,names=[ 'long', 'lat', 'name' ])
+    return pandas.read_csv(source,quotechar='"',skipinitialspace=True,header=None,names=[ 'long', 'lat', 'name' ])
   else:
     # has a header
-    df = pandas.read_csv(source)
+    df = pandas.read_csv(source,quotechar='"',skipinitialspace=True)
     print ("Found Columns: %s" % df.columns)
 
     # Some CSVs have a leading ';' before the header - remove it

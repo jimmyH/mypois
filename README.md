@@ -123,6 +123,14 @@ To run using python:
 python /path/to/mypois.py /path/to/config.ini
 ```
 
+## Supported CSV format
+
+  - CSV files must use a comma separator and double quotes for quotation.
+  - If no header is present then it assumes that we have longitude, latitude and name columns.
+  - If a header is present then it will attempt to map these to the longitude, latitude and name columns.
+    - If the header has a semicolon prefix, the prefix is ignored.
+  - Comments (either semicolon or hash) are not supported
+
 ## Using pyinstaller to distribute as an executable on Windows
 
 ```
