@@ -67,3 +67,61 @@ def indent(elem, level=0):
     else:
         if level and (not elem.tail or not elem.tail.strip()):
             elem.tail = i
+
+import pandas
+def read_geo_csv(source):
+  ''' Try and handle CSVs with or without headers '''
+
+  # Read the 1st row to establish if there is a header or not
+  df = pandas.read_csv(source,header=None,nrows=1)
+
+  if len(df.columns)<3:
+    raise Exception("Expected at least 3 columns csv file %s, got %d" % (source,len(df.columns)))
+
+  if pandas.api.types.is_numeric_dtype(df[0]) and pandas.api.types.is_numeric_dtype(df[1]):
+    # does not have a header, we assume the fields are long,lat,name
+    if len(df.columns)!=3:
+      raise Exception("Expected 3 columns in headerless csv file %s, got %d" % (source,len(df.columns)))
+    return pandas.read_csv(source,header=None,names=[ 'long', 'lat', 'name' ])
+  else:
+    # has a header
+    df = pandas.read_csv(source)
+    print ("Found Columns: %s" % df.columns)
+
+    # Some CSVs have a leading ';' before the header - remove it
+    df.columns = [s[1:] if s.startswith(';') else s for s in df.columns]
+
+    # Use lowercase for column names and remove whitespace
+    # Warning: This could cause issues with unicode names..
+    df.columns = [s.strip().lower() for s in df.columns]
+
+    have_longitude = False
+    have_latitude = False
+    have_name = False
+
+    for col in df.columns:
+      if col=='long':
+        have_longitude=True
+      elif col=='longitude':
+        df.rename(columns={'longitude':'long'}, inplace=True)
+        have_longitude=True
+      elif col=='lon':
+        df.rename(columns={'lon':'long'}, inplace=True)
+        have_longitude=True
+      elif col=='lng':
+        df.rename(columns={'lng':'long'}, inplace=True)
+        have_longitude=True
+      elif col=='lat':
+        have_latitude=True
+      elif col=='latitude':
+        df.rename(columns={'latitude':'lat'}, inplace=True)
+        have_latitude=True
+      elif col=='name':
+        have_name=True
+      else:
+        print("Warning: ignoring unknown column: %s" % col)
+
+    if not have_longitude or not have_latitude or not have_name:
+      raise Exception("Failed to find longitude, latitude and name columns")
+
+    return df

@@ -134,7 +134,7 @@ class MIB2HIGH(object):
     else:
       startpoiid=lastrowid+1
 
-    df = pandas.read_csv(source,header=None,names=[ 'long', 'lat', 'name' ])
+    df = utils.read_geo_csv(source)
 
     print('Read %d entries' % len(df))
 
