@@ -40,6 +40,7 @@ Alternatively, you need a version of python 2.7 or later, and require the follow
   - pandas
   - pillow
   - configparser
+  - numpy
 
 It also requires a version of sqlite with rtree support (only for Columbus).
 
