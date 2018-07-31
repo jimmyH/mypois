@@ -10,25 +10,6 @@ from __future__ import print_function
 # latitude -90, 90
 # longitude -180, 180
 
-def to_twos_complement(input_value):
-  ''' convert a long to its' 2s complement value (32bit)'''
-  if (input_value<0):
-    v = -input_value
-    v = (~v) & 0xffffffff
-    v += 1
-    return v
-  return input_value
-
-def from_twos_complement(input_value):
-  ''' convert a 2s complement value (32bit) to a long'''
-  mask = 0x80000000
-  if (input_value & 0x80000000):
-    v = input_value - 1
-    v = (~v) & 0xffffffff
-    v = -v
-    return v
-  return input_value
- 
 def widen(v):
   ''' widen (create a zero to the left of each bit) a 32bit value to 64 bits
       https://graphics.stanford.edu/~seander/bithacks.html#InterleaveBMN
@@ -64,17 +45,25 @@ def unwiden(v):
   return v
 
 def encode_morton_code(lat,lng):
+  if lat<0:
+    lat+=180
+  if lng<0:
+    lng+=360
   latw = int(lat*0xffffffff/360.0) 
   lngw = int(lng*0xffffffff/360.0)
-  latw = widen(to_twos_complement(latw))
-  lngw = widen(to_twos_complement(lngw))
+  latw = widen(latw)
+  lngw = widen(lngw)
   return lngw | ( latw << 1 )
 
 def decode_morton_code(code):
-  lat = float(from_twos_complement(unwiden(code>>1)))
-  lng = float(from_twos_complement(unwiden(code)))
+  lat = float(unwiden(code>>1))
+  lng = float(unwiden(code))
   lat *= 360.0/0xffffffff
   lng *= 360.0/0xffffffff
+  if lat>=90:
+    lat-=180
+  if lng>=180:
+    lng-=360
   return (lat,lng)
 
 # lat,long,morton - test data generated from skoda destinations portal
@@ -86,7 +75,8 @@ morton_test_data = [ ( 0, 0, 0 ),
                      ( 90, 0, 768614336404561920 ),
                      ( 51.5309982299805, -2.53273010253906, 6734162532828480880 ),
                      ( 51.71995, -3.45621, 6733409682878134185 ),
-                     ( 49.9161371,6.1797018, -4027837946659576553 ), # MIB1
+                     ( 49.9161371, 6.1797018, 583848065977581386 ),
+                     ( -21.063410, 55.708730, 3321195214889472278 ),
                    ]
 
 def test_morton_codes():
