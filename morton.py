@@ -7,6 +7,8 @@
 
 from __future__ import print_function
 
+import numpy as np
+
 # latitude -90, 90
 # longitude -180, 180
 
@@ -64,15 +66,15 @@ def unwiden(v):
   return v
 
 def encode_morton_code(lat,lng):
-  latw = int(lat*0xffffffff/360.0) 
-  lngw = int(lng*0xffffffff/360.0)
+  latw = np.int32(lat*0xffffffff/360.0) 
+  lngw = np.int32(lng*0xffffffff/360.0)
   latw = widen(to_twos_complement(latw))
   lngw = widen(to_twos_complement(lngw))
   return lngw | ( latw << 1 )
 
 def decode_morton_code(code):
-  lat = float(from_twos_complement(unwiden(code>>1)))
-  lng = float(from_twos_complement(unwiden(code)))
+  lat = np.float32(from_twos_complement(unwiden(code>>1)))
+  lng = np.float32(from_twos_complement(unwiden(code)))
   lat *= 360.0/0xffffffff
   lng *= 360.0/0xffffffff
   return (lat,lng)
