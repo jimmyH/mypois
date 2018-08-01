@@ -7,7 +7,7 @@ import mib2tsd as m2tsd
 import configparser
 import poifix
 
-VERSION=0.02
+VERSION=0.03
 
 def resource_path(rpath):
   ''' Get the path to a resource relative to this script.
