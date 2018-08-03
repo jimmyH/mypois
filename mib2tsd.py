@@ -8,6 +8,7 @@ import utils
 import shutil
 from morton import encode_morton_code, decode_morton_code
 from PIL import Image
+from distutils.util import strtobool
 
 '''
 Amundsen:
@@ -70,7 +71,7 @@ class MIB2TSD(object):
     catid=2001 if lastcatid is None else lastcatid+1
 
     categoryname=name
-    categorywarn=1 if warning else 0
+    categorywarn=strtobool(warning)
 
     src_icon=icon
     (_,icon_extension) = os.path.splitext(src_icon)

@@ -7,6 +7,7 @@ import os
 import utils
 import shutil
 import xml.etree.cElementTree as cElementTree
+from distutils.util import strtobool
 from PIL import Image
 '''
 
@@ -79,7 +80,7 @@ class MIB2HIGH(object):
     icon=d['Icon']
     name=d['Name']
 
-    warning=1 if warning else 0
+    warning=strtobool(warning)
 
     cursor = self.conn.cursor()
 
