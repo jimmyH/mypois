@@ -56,11 +56,8 @@ def create_mypois(config_file):
   #
   for section in config.sections():
     if section != 'General':
-      name=config.get(section,'Name')
-      warning=config.getboolean(section,'Warning')
       source=config.get(section,'Source')
-      icon=config.get(section,'Icon')
-      print("Section [%s] %s %d %s %s" % (section,name,warning,source,icon))
+      print("Section [%s] %s " % (section,config.items(section)))
       if 'Disabled' in config[section] and config.getboolean(section,'Disabled'):
         print("Disabled")
         continue
@@ -69,8 +66,8 @@ def create_mypois(config_file):
       extension = extension.lower()
 
       if extension == '.csv':
-        if not skipmib2high: mib2high.read_csv(config[section])
-        if not skipmib2tsd: mib2tsd.read_csv(config[section])
+        if not skipmib2high: mib2high.read_csv(config,section)
+        if not skipmib2tsd: mib2tsd.read_csv(config,section)
       else:
         print("Unknown extension %s" % extension)
 

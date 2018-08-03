@@ -73,11 +73,11 @@ class MIB2HIGH(object):
     self.poibitmaps.attrib['count'] = str(self.next_category)
     cElementTree.ElementTree(self.poibitmaps).write(os.path.join(self.dest,'PersonalPOI','Package','0','default','bitmaps.xml'),encoding='utf-8',xml_declaration=True)
 
-  def read_csv(self,d):
-    source=d['Source']
-    warning=d['Warning']
-    icon=d['Icon']
-    name=d['Name']
+  def read_csv(self,config,section):
+    name=config.get(section,'Name')
+    warning=config.getboolean(section,'Warning')
+    source=config.get(section,'Source')
+    icon=config.get(section,'Icon')
 
     warning=1 if warning else 0
 

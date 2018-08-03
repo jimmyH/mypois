@@ -56,11 +56,11 @@ class MIB2TSD(object):
   def close(self):
     self.conn.close()
 
-  def read_csv(self,d):
-    source=d['Source']
-    warning=d['Warning']
-    icon=d['Icon']
-    name=d['Name']
+  def read_csv(self,config,section):
+    name=config.get(section,'Name')
+    warning=config.getboolean(section,'Warning')
+    source=config.get(section,'Source')
+    icon=config.get(section,'Icon')
 
     cursor = self.conn.cursor()
 
