@@ -82,7 +82,7 @@ def read_geo_csv(source):
   '''
 
   # Read the 1st row to establish if there is a header or not
-  df = pandas.read_csv(source,header=None,nrows=1)
+  df = pandas.read_csv(source,header=None,nrows=1,quoting=csv.QUOTE_ALL)
 
   if len(df.columns)<3:
     raise Exception("Expected at least 3 columns csv file %s, got %d" % (source,len(df.columns)))
@@ -91,10 +91,10 @@ def read_geo_csv(source):
     # does not have a header, we assume the fields are long,lat,name
     if len(df.columns)!=3:
       raise Exception("Expected 3 columns in headerless csv file %s, got %d" % (source,len(df.columns)))
-    return pandas.read_csv(source,quotechar='"',skipinitialspace=True,header=None,names=[ 'long', 'lat', 'name' ])
+    return pandas.read_csv(source,quotechar='"',skipinitialspace=True,header=None,names=[ 'long', 'lat', 'name' ],quoting=csv.QUOTE_ALL)
   else:
     # has a header
-    df = pandas.read_csv(source,quotechar='"',skipinitialspace=True)
+    df = pandas.read_csv(source,quotechar='"',skipinitialspace=True,quoting=csv.QUOTE_ALL)
     print ("Found Columns: %s" % df.columns)
 
     # Some CSVs have a leading ';' before the header - remove it
