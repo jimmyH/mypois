@@ -76,6 +76,8 @@ class MIB2HIGH(object):
   def read_csv(self,config,section):
     name=config.get(section,'Name')
     warning=config.getboolean(section,'Warning')
+    #warnMessage=config.get(section,'WarnMessage')
+    #activationRadius=int(config.get(section,'ActivationRadius'))
     source=config.get(section,'Source')
     icon=config.get(section,'Icon')
 
