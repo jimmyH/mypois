@@ -129,6 +129,8 @@ def read_geo_csv(source):
         have_latitude=True
       elif col=='name':
         have_name=True
+      elif col=='personalComment':
+        df.rename(columns={'personalComment':'comment'}, inplace=True)
       else:
         print("Warning: ignoring unknown column: %s" % col)
 
