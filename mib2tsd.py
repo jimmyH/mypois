@@ -3,11 +3,12 @@ from __future__ import print_function
 import os
 import sqlite3
 import pandas
-import csv
 import utils
 import shutil
 from morton import encode_morton_code, decode_morton_code
 from PIL import Image
+
+from version import VERSION
 
 '''
 Amundsen:
@@ -31,7 +32,7 @@ class MIB2TSD(object):
     self.db = os.path.join(dest,'personalpoi','ppoidb','1','default','poidata.db3')
 
   def open(self):
-    utils.create_update_dot_txt(os.path.join(self.dest,'personalpoi','InfoFile','1','default','Update.txt'))
+    utils.create_update_dot_txt(os.path.join(self.dest,'personalpoi','InfoFile','1','default','Update.txt'),name='MyPOI (%s,%s)' % (VERSION,self.__class__.__name__))
 
     self.conn = sqlite3.connect(self.db)
 

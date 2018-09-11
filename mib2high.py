@@ -2,12 +2,13 @@ from __future__ import print_function
 
 import sqlite3
 import pandas
-import csv
 import os
 import utils
 import shutil
 import xml.etree.cElementTree as cElementTree
 from PIL import Image
+
+from version import VERSION
 '''
 
 Columbus:
@@ -39,7 +40,7 @@ class MIB2HIGH(object):
     self.conn.commit()
 
     # Create the Update.txt file
-    utils.create_update_dot_txt(os.path.join(self.dest,'PersonalPOI','InfoFile','0','default','Update.txt'))
+    utils.create_update_dot_txt(os.path.join(self.dest,'PersonalPOI','InfoFile','0','default','Update.txt'),name='MyPOI (%s,%s)' % (VERSION,self.__class__.__name__))
 
     # Start creating the categories.pc xml file
     self.poicategories = cElementTree.Element('poicategories', {'version':'02010011'})

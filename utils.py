@@ -1,6 +1,6 @@
 from datetime import date
 
-def create_update_dot_txt(filename,version=None):
+def create_update_dot_txt(filename,name=None,version=None):
   '''
 device=PersonalPOI
 
@@ -36,9 +36,11 @@ version.cs_CZ=2018-07-07
     if version is None:
       version = str(date.today())
 
+    if name is None:
+      name = 'Personal POI'
+
     locales=[ 'default', 'de_DE', 'en_GB', 'en_SA', 'es_ES', 'fr_FR', 'it_IT', 'nl_NL', 'pt_PT', 'ru_RU', 'pl_PL', 'cs_CZ' ]
     device='PersonalPOI'
-    name='Personal POI'
 
     f.write('device=%s\n' % device)
     f.write('\n')
