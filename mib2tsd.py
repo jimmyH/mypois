@@ -47,7 +47,7 @@ class MIB2TSD(object):
     cursor.execute('create virtual table if not exists "pPoiFtsTable" using fts4 ( pPoiId INTEGER NOT NULL,name TEXT NOT NULL)')
 
     # Populate infoDB table if empty
-    cursor.execute('select max(rowid) from infoDB');
+    cursor.execute('select max(rowid) from infoDB')
     (lastrowid,)=cursor.fetchone()
     if lastrowid is None:
       cursor.execute('insert into infoDB values(?,?,?,?,?,?)',('Personal POI','1.1.1','1.0','Personal POI',0,0))

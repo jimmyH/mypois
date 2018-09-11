@@ -140,3 +140,91 @@ def read_geo_csv(source):
       raise Exception("Failed to find longitude, latitude and name columns")
 
     return df
+
+try:
+    import xml.etree.cElementTree as ET
+except ImportError:
+    import xml.etree.ElementTree as ET
+
+def read_geo_gpx(source):
+  '''
+  Try and read a GPX file.
+
+  We only read in waypoints (wpt)
+
+  From gpx schema v1.1:
+    wpt (wptType)
+        - attr: lat (latitudeType) None
+        - attr: lon (longitudeType) None
+        ele (xsd:decimal)
+        time (xsd:dateTime)
+        magvar (degreesType)
+        geoidheight (xsd:decimal)
+        name (xsd:string)
+        cmt (xsd:string)
+        desc (xsd:string)
+        src (xsd:string)
+        link (linkType)
+            - attr: href (xsd:anyURI) None
+            text (xsd:string)
+            type (xsd:string)
+        sym (xsd:string)
+        type (xsd:string)
+        fix (fixType)
+        sat (xsd:nonNegativeInteger)
+        hdop (xsd:decimal)
+        vdop (xsd:decimal)
+        pdop (xsd:decimal)
+        ageofdgpsdata (xsd:decimal)
+        dgpsid (dgpsStationType)
+        extensions (extensionsType)
+  '''
+
+  # Read in the XML and strip all namespaces
+  it = ET.iterparse(source)
+  for _, el in it:
+      if '}' in el.tag:
+          el.tag = el.tag.split('}', 1)[1]  # strip all namespaces
+  root = it.root
+
+  if root.tag != 'gpx':
+    raise Exception('Failed to find gpx tag in xml file %s' % (source))
+
+  for i in root.attrib:
+    print("%s %s" % (i, root.attrib[i]))
+
+  waypoints=[]
+
+  for c in root:
+    if c.tag=='wpt':
+      wpt={}
+      for a in c.attrib:
+        wpt[a] = c.attrib[a]
+      for e in c:
+        wpt[e.tag] = e.text
+      waypoints.append(wpt)
+
+  df = pandas.DataFrame(waypoints)
+  df[['lat','lon']] = df[['lat','lon']].apply(pandas.to_numeric)
+
+  have_longitude = False
+  have_latitude = False
+  have_name = False
+
+  for col in df.columns:
+    if col=='lon':
+      df.rename(columns={'lon':'long'}, inplace=True)
+      have_longitude=True
+    elif col=='lat':
+      have_latitude=True
+    elif col=='name':
+      have_name=True
+    elif col=='comment':
+      pass
+    else:
+      print("Warning: ignoring unknown column: %s" % col)
+
+  if not have_longitude or not have_latitude or not have_name:
+    raise Exception("Failed to find longitude, latitude and name columns")
+
+  return df
