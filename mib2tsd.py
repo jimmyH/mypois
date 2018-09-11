@@ -60,6 +60,8 @@ class MIB2TSD(object):
   def read_csv(self,config,section):
     name=config.get(section,'Name')
     warning=config.getboolean(section,'Warning')
+    warnMessage=config.get(section,'WarnMessage')
+    activationRadius=int(config.get(section,'ActivationRadius'))
     source=config.get(section,'Source')
     icon=config.get(section,'Icon')
 
@@ -85,7 +87,7 @@ class MIB2TSD(object):
 
     print('MIB2TSD New Category: %d "%s" %d "%s" => "%s"' % (catid,categoryname,categorywarn,src_icon,dst_icon))
 
-    cursor.execute('insert into pPoiCategoryTable(catId,categoryDefaultName,warning) values(?,?,?)',(catid,categoryname,categorywarn))
+    cursor.execute('insert into pPoiCategoryTable(catId,categoryDefaultName,warning,warnMessage,activationRadius) values(?,?,?,?,?)',(catid,categoryname,categorywarn,warnMessage,activationRadius))
     cursor.execute('insert into pPoiIconTable(catId,iconSet,iconName) values(?,?,?)',(catid,1,dst_icon)) # TODO What is iconSet used for?
     cursor.execute('insert into pPoiIconTable(catId,iconSet,iconName) values(?,?,?)',(catid,2,dst_icon))
     self.conn.commit()
