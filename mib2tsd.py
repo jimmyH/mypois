@@ -117,7 +117,10 @@ class MIB2TSD(object):
     poisystem=pandas.DataFrame()
     poisystem['pPoiId']=range(startpoiid,startpoiid+len(poiaddr))
     poisystem['catId']=catid
-    poisystem['personalComment']=df['comment']
+    if 'comment' in df:
+      # Store the comment in the 'personalComment' field.
+      # TODO Check if this is displayed on the SatNav
+      poisystem['personalComment']=df['comment']
     poisystem.to_sql(name='pPoiSystemTable',con=self.conn,if_exists='append',index=False)
 
     # Build the poifts table
