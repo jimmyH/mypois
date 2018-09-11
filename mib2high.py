@@ -127,7 +127,7 @@ class MIB2HIGH(object):
     ccode=0
 
     # Get the last rowid used in the table
-    cursor.execute('select max(rowid) from "poicoord"');
+    cursor.execute('select max(rowid) from "poicoord"')
     (lastrowid,)=cursor.fetchone()
     if lastrowid is None:
       startpoiid=0
