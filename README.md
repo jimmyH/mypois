@@ -20,7 +20,7 @@
     - For windows you can find a prebuilt executable in the releases page
     - To use, simply create a configuration file in the same directory as your POIs, and then run mypois.exe config.ini, then copy the generated files to your sd card.
 
-  Audi, Volkswagen and Seat SatNavs are not currently supported.
+  Audi, Volkswagen and Seat SatNavs are not 'officially' supported, however it does work on some of these. Please update Issue #3 if you find it works (or doesn't work) on your SatNav. 
 
 ## Notes
 
