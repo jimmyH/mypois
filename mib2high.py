@@ -74,7 +74,7 @@ class MIB2HIGH(object):
     self.poibitmaps.attrib['count'] = str(self.next_category)
     cElementTree.ElementTree(self.poibitmaps).write(os.path.join(self.dest,'PersonalPOI','Package','0','default','bitmaps.xml'),encoding='utf-8',xml_declaration=True)
 
-  def read_csv(self,config,section):
+  def read(self,config,section):
     name=config.get(section,'Name')
     warning=config.getboolean(section,'Warning')
     source=config.get(section,'Source')
@@ -135,7 +135,7 @@ class MIB2HIGH(object):
     else:
       startpoiid=lastrowid+1
 
-    df = utils.read_geo_csv(source)
+    df = utils.read_geo(source)
 
     print('Read %d entries' % len(df))
 

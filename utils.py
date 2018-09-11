@@ -1,3 +1,4 @@
+import os
 from datetime import date
 
 def create_update_dot_txt(filename,name=None,version=None):
@@ -71,6 +72,18 @@ def indent(elem, level=0):
             elem.tail = i
 
 import pandas
+
+def read_geo(source):
+  (_,extension) = os.path.splitext(source)
+  extension = extension.lower()
+
+  if extension == '.csv':
+    return read_geo_csv(source)
+  elif extension == '.gpx':
+    return read_geo_gpx(source)
+  else:
+    raise Exception("Unknown extension %s" % extension)
+
 def read_geo_csv(source):
   ''' Try and handle CSVs with or without headers
 
@@ -83,6 +96,8 @@ def read_geo_csv(source):
       * If a header is present it attempts to find the longitude, latitude and name columns
 
   '''
+  print("Parsing CSV %s" % (source))
+
   csv_opts={ 'comment':';',
              'quotechar':'"',
              'escapechar':'\\',
@@ -180,6 +195,8 @@ def read_geo_gpx(source):
         extensions (extensionsType)
   '''
 
+  print("Parsing GPX %s" % (source))
+
   # Read in the XML and strip all namespaces
   it = ET.iterparse(source)
   for _, el in it:
@@ -191,7 +208,8 @@ def read_geo_gpx(source):
     raise Exception('Failed to find gpx tag in xml file %s' % (source))
 
   for i in root.attrib:
-    print("%s %s" % (i, root.attrib[i]))
+    if i=='version' or i=='creator':
+      print("%s %s" % (i, root.attrib[i]))
 
   waypoints=[]
 

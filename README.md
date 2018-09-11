@@ -27,7 +27,7 @@
 Icons are converted to 39x39 png images (using the PIL library).
 
 The following issues may be encountered:
-  - Only csv data is currently supported
+  - Only csv and gpx data is currently supported
   - Non utf-8 characters may not work (untested)
   - The PIL library has limited support for different image types (only tested bmp,png)
   - Images may lose their aspect ration when being converted to 39x39
@@ -71,7 +71,7 @@ SkipMIB2TSD=False                     # Set to True to skip building the MIB2TSD
 [traffic]                             # One section per category
 Name=GB Traffic Light Cameras         # The category name
 Warning=True                          # Use 'True' to get a sound notification when near
-Source=../GBFeuRougeGB.csv            # The input file containing the POIs **Currently only csv files are supported**
+Source=../GBFeuRougeGB.csv            # The input file containing the POIs **Currently only csv and gpx files are supported**
                                       # NB Use / for Unix paths, and \ for Windows Paths
 Icon=../traffic.png                   # The icon to use                    **Will be resized and converted to 39x39 png**
 Disabled=False                        # Optional element, set to True if you want this section to be skipped

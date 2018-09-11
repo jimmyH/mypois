@@ -57,7 +57,7 @@ class MIB2TSD(object):
   def close(self):
     self.conn.close()
 
-  def read_csv(self,config,section):
+  def read(self,config,section):
     name=config.get(section,'Name')
     warning=config.getboolean(section,'Warning')
     source=config.get(section,'Source')
@@ -99,7 +99,7 @@ class MIB2TSD(object):
     else:
       startpoiid=lastrowid+1
 
-    df = utils.read_geo_csv(source)
+    df = utils.read_geo(source)
 
     print('Read %d entries' % len(df))
 
