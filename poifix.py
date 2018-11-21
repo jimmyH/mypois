@@ -99,7 +99,7 @@ def fix(base):
       # FileSize = Total size of all files referred to in hashes.txt file
       #
       section_os = section[:-4].replace('\\',os.sep)
-      source = config[section]['Source'].strip('"').replace('/',os.sep)
+      source = config[section]['Source'].strip('"').replace('/',os.sep) if config.has_option(section,'Source') else ''
       source = os.path.join(section_os,source)
       (length,digest) = dir_sha1( os.path.join(base,source) )
       config[section]['FileSize'] = '"%d"' % length
@@ -111,7 +111,7 @@ def fix(base):
       # FileSize = Size of file in bytes
       #
       section_os = section[:-5].replace('\\',os.sep)
-      source = config[section]['Source'].strip('"').replace('/',os.sep)
+      source = config[section]['Source'].strip('"').replace('/',os.sep) if config.has_option(section,'Source') else ''
       source = os.path.join(section_os,source)
       (length,digest) = file_sha1( os.path.join(base,source) )
       config[section]['FileSize'] = '"%d"' % length
