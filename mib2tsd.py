@@ -103,6 +103,9 @@ class MIB2TSD(object):
 
     print('Read %d entries' % len(df))
 
+    if (len(df) == 0):
+      return
+
     df['mortonCode']=df.apply(lambda x: encode_morton_code(x['lat'],x['long']),axis=1)
 
     # Build the poiaddr table
