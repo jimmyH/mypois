@@ -101,7 +101,8 @@ def read_geo_csv(source):
   csv_opts={ 'comment':';',
              'quotechar':'"',
              'escapechar':'\\',
-             'skipinitialspace':True }
+             'skipinitialspace':True,
+             'encoding': 'utf8' }
 
   # Read the 1st row to establish if there is a header or not
   df = pandas.read_csv(source,header=None,nrows=1,**csv_opts)
